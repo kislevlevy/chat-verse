@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useSocket } from "./providers/socket-provider";
-import { Badge } from "./ui/badge";
+import { useSocket } from './providers/socket-provider';
+import { Badge } from './ui/badge';
 
 export const SocketIndicator = () => {
   const { isConnected } = useSocket();

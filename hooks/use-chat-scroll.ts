@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 type ChatScrollProps = {
   chatRef: React.RefObject<HTMLDivElement>;
@@ -26,8 +26,8 @@ export const useChatScroll = ({
       }
     };
 
-    topDiv?.addEventListener("scroll", handleScroll);
-    return () => topDiv?.removeEventListener("scroll", handleScroll);
+    topDiv?.addEventListener('scroll', handleScroll);
+    return () => topDiv?.removeEventListener('scroll', handleScroll);
   }, [shouldLoadMore, loadMore, chatRef]);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const useChatScroll = ({
 
     if (shouldAutoScroll()) {
       setTimeout(() => {
-        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+        bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
   }, [bottomRef, chatRef, count, hasInitialized]);

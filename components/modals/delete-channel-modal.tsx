@@ -1,10 +1,10 @@
-"use client";
-import { useModal } from "@/hooks/use-modal-store";
-import { useState } from "react";
-import axios from "axios";
-import qs from "query-string";
+'use client';
+import { useModal } from '@/hooks/use-modal-store';
+import { useState } from 'react';
+import axios from 'axios';
+import qs from 'query-string';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -12,12 +12,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { useParams, useRouter } from "next/navigation";
+} from '@/components/ui/dialog';
+import { useParams, useRouter } from 'next/navigation';
 
 export const DeleteChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const isModalOpen = isOpen && type === "deleteChannel";
+  const isModalOpen = isOpen && type === 'deleteChannel';
   const { server, channel } = data;
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -54,9 +54,7 @@ export const DeleteChannelModal = () => {
           <DialogDescription className="text-center text-zinc-500">
             Are you sure you want to proceed?
             <br />
-            <span className="font-semibold text-indigo-500">
-              #{channel?.name}{" "}
-            </span>
+            <span className="font-semibold text-indigo-500">#{channel?.name} </span>
             will be permanently deleted.
           </DialogDescription>
         </DialogHeader>

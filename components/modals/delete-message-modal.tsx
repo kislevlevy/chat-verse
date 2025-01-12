@@ -1,10 +1,10 @@
-"use client";
-import { useModal } from "@/hooks/use-modal-store";
-import { useState } from "react";
-import axios from "axios";
-import qs from "query-string";
+'use client';
+import { useModal } from '@/hooks/use-modal-store';
+import { useState } from 'react';
+import axios from 'axios';
+import qs from 'query-string';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -12,11 +12,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 
 export const DeleteMessageModal = () => {
   const { isOpen, onClose, type, data } = useModal();
-  const isModalOpen = isOpen && type === "deleteMessage";
+  const isModalOpen = isOpen && type === 'deleteMessage';
   const { apiUrl, query } = data;
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +25,7 @@ export const DeleteMessageModal = () => {
       setIsLoading(true);
 
       const url = qs.stringifyUrl({
-        url: apiUrl || "",
+        url: apiUrl || '',
         query,
       });
 

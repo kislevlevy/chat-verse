@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { Member, MemberRole, Profile } from "@prisma/client";
-import { UserAvatar } from "@/components/user-avatar";
-import { ActionTooltip } from "@/components/action-tooltip";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import * as z from "zod";
-import axios from "axios";
-import qs from "query-string";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from "lucide-react";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
-import { useRouter, useParams } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useModal } from "@/hooks/use-modal-store";
+import { Member, MemberRole, Profile } from '@prisma/client';
+import { UserAvatar } from '@/components/user-avatar';
+import { ActionTooltip } from '@/components/action-tooltip';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
+import * as z from 'zod';
+import axios from 'axios';
+import qs from 'query-string';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Edit, FileIcon, ShieldAlert, ShieldCheck, Trash } from 'lucide-react';
+import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
+import { useRouter, useParams } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useModal } from '@/hooks/use-modal-store';
 
 interface ChatItemProps {
   id: string;
@@ -66,11 +66,11 @@ export const ChatItem = ({
 
   useEffect(() => {
     const handleKeyDown = (event: any) => {
-      if (event.key === "Escape" || event.keyCode === 27) setIsEditing(false);
+      if (event.key === 'Escape' || event.keyCode === 27) setIsEditing(false);
     };
 
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   const form = useForm<z.infer<typeof fromSchema>>({
@@ -100,13 +100,13 @@ export const ChatItem = ({
     });
   }, [content]);
 
-  const fileType = fileUrl?.split(".").pop();
+  const fileType = fileUrl?.split('.').pop();
   const isAdmin = currntMember.role === MemberRole.ADMIN;
   const isModerator = currntMember.role === MemberRole.MODERATOR;
   const isOwner = currntMember.id === member.id;
   const canDeleteMessage = !deleted && (isAdmin || isModerator || isOwner);
   const canEditMessage = !deleted && isOwner && !fileUrl;
-  const isPDF = fileType === "pdf" && fileUrl;
+  const isPDF = fileType === 'pdf' && fileUrl;
   const isImage = !isPDF && fileUrl;
 
   return (
@@ -142,12 +142,7 @@ export const ChatItem = ({
               rel="noopener noreferrer"
               className=" relative aspect-square rounded-md mt-2 overflow-hidden border flex items-center bg-secondary h-48 w-48"
             >
-              <Image
-                src={fileUrl}
-                alt={content}
-                fill
-                className=" object-cover"
-              />
+              <Image src={fileUrl} alt={content} fill className=" object-cover" />
             </a>
           )}
           {isPDF && (
@@ -166,9 +161,8 @@ export const ChatItem = ({
           {!fileUrl && !isEditing && (
             <p
               className={cn(
-                "text-sm text-zinc-600 dark:text-zinc-300",
-                deleted &&
-                  "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1"
+                'text-sm text-zinc-600 dark:text-zinc-300',
+                deleted && 'italic text-zinc-500 dark:text-zinc-400 text-xs mt-1'
               )}
             >
               {content}
@@ -227,7 +221,7 @@ export const ChatItem = ({
           <ActionTooltip label="Delete">
             <Trash
               onClick={() =>
-                onOpen("deleteMessage", {
+                onOpen('deleteMessage', {
                   apiUrl: `${socketUrl}/${id}`,
                   query: socketQuery,
                 })

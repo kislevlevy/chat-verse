@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { ServerWithMembersNProfiles } from "@/types";
-import { ChannelType, MemberRole } from "@prisma/client";
-import { ActionTooltip } from "../action-tooltip";
-import { Plus, Settings } from "lucide-react";
-import { useModal } from "@/hooks/use-modal-store";
+import { ServerWithMembersNProfiles } from '@/types';
+import { ChannelType, MemberRole } from '@prisma/client';
+import { ActionTooltip } from '../action-tooltip';
+import { Plus, Settings } from 'lucide-react';
+import { useModal } from '@/hooks/use-modal-store';
 
 interface ServerSectionProps {
   label: string;
-  sectionType: "channels" | "members";
+  sectionType: 'channels' | 'members';
   role?: MemberRole;
   channelType?: ChannelType;
   server?: ServerWithMembersNProfiles;
@@ -28,20 +28,20 @@ export const ServerSection = ({
       <p className="text-xs uppercase font-semibold text-zinc-500 dark:text-zinc-400">
         {label}
       </p>
-      {role !== MemberRole.GUEST && sectionType === "channels" && (
+      {role !== MemberRole.GUEST && sectionType === 'channels' && (
         <ActionTooltip label="Create channel" side="top">
           <button
-            onClick={() => onOpen("createChannel", { channelType })}
+            onClick={() => onOpen('createChannel', { channelType })}
             className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
           >
             <Plus className="h-4 w-4" />
           </button>
         </ActionTooltip>
       )}
-      {role === MemberRole.ADMIN && sectionType === "members" && (
+      {role === MemberRole.ADMIN && sectionType === 'members' && (
         <ActionTooltip label="Manage members" side="top">
           <button
-            onClick={() => onOpen("members", { server })}
+            onClick={() => onOpen('members', { server })}
             className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition"
           >
             <Settings className="h-4 w-4" />

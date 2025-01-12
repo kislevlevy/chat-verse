@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
-import { ChannelType } from "@prisma/client";
-import qs from "query-string";
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useModal } from '@/hooks/use-modal-store';
+import { ChannelType } from '@prisma/client';
+import qs from 'query-string';
 
 import {
   Dialog,
@@ -17,7 +17,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -25,23 +25,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { useEffect } from "react";
+} from '@/components/ui/select';
+import { useEffect } from 'react';
 
 const formSchema = z.object({
   name: z
     .string()
     .min(1, {
-      message: "Channel name is required.",
+      message: 'Channel name is required.',
     })
-    .refine((name) => name !== "general", {
+    .refine((name) => name !== 'general', {
       message: "Channel cannot be 'general'",
     }),
   type: z.nativeEnum(ChannelType),
@@ -50,21 +50,21 @@ const formSchema = z.object({
 export const EditChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const router = useRouter();
-  const isModalOpen = isOpen && type === "editChannel";
+  const isModalOpen = isOpen && type === 'editChannel';
   const { channel, server } = data;
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: '',
       type: channel?.type || ChannelType.TEXT,
     },
   });
 
   useEffect(() => {
     if (channel) {
-      form.setValue("name", channel.name);
-      form.setValue("type", channel.type);
+      form.setValue('name', channel.name);
+      form.setValue('type', channel.type);
     }
   }, [form, channel]);
 
@@ -142,11 +142,7 @@ export const EditChannelModal = () => {
                       </FormControl>
                       <SelectContent>
                         {Object.values(ChannelType).map((type) => (
-                          <SelectItem
-                            key={type}
-                            value={type}
-                            className="capitalize"
-                          >
+                          <SelectItem key={type} value={type} className="capitalize">
                             {type.toLowerCase()}
                           </SelectItem>
                         ))}

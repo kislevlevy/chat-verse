@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { Member, Message, Profile } from "@prisma/client";
-import { ChatWelcome } from "./chat-welcome";
-import { useChatQuery } from "@/hooks/use-chat-query";
-import { Loader2, ServerCrash } from "lucide-react";
-import { Fragment, useRef, ElementRef } from "react";
-import { ChatItem } from "./chat-item";
-import { format } from "date-fns";
-import { useChatSocket } from "@/hooks/use-chat-socket";
-import { useChatScroll } from "@/hooks/use-chat-scroll";
+import { Member, Message, Profile } from '@prisma/client';
+import { ChatWelcome } from './chat-welcome';
+import { useChatQuery } from '@/hooks/use-chat-query';
+import { Loader2, ServerCrash } from 'lucide-react';
+import { Fragment, useRef, ElementRef } from 'react';
+import { ChatItem } from './chat-item';
+import { format } from 'date-fns';
+import { useChatSocket } from '@/hooks/use-chat-socket';
+import { useChatScroll } from '@/hooks/use-chat-scroll';
 
-const DATE_FORMAT = "d MMM yyyy, HH:mm";
+const DATE_FORMAT = 'd MMM yyyy, HH:mm';
 
 type MessageWithMemberNProfile = Message & {
   member: Member & { profile: Profile };
@@ -23,9 +23,9 @@ interface ChatMessagesProps {
   apiUrl: string;
   socketUrl: string;
   socketQuery: Record<string, string>;
-  paramKey: "channelId" | "conversationId";
+  paramKey: 'channelId' | 'conversationId';
   paramValue: string;
-  type: "channel" | "conversation";
+  type: 'channel' | 'conversation';
 }
 
 export const ChatMessages = ({
@@ -43,8 +43,8 @@ export const ChatMessages = ({
   const addKey = `chat:${chatId}:messages`;
   const updateKey = `chat:${chatId}:messages:update`;
 
-  const chatRef = useRef<ElementRef<"div">>(null);
-  const bottomRef = useRef<ElementRef<"div">>(null);
+  const chatRef = useRef<ElementRef<'div'>>(null);
+  const bottomRef = useRef<ElementRef<'div'>>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } =
     useChatQuery({
@@ -68,7 +68,7 @@ export const ChatMessages = ({
     count: data?.pages?.[0]?.items?.length ?? 0,
   });
 
-  if (status === "pending") {
+  if (status === 'pending') {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
         <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
@@ -79,7 +79,7 @@ export const ChatMessages = ({
     );
   }
 
-  if (status === "error") {
+  if (status === 'error') {
     return (
       <div className="flex flex-col flex-1 justify-center items-center">
         <ServerCrash className="h-7 w-7 text-zinc-500 my-4" />

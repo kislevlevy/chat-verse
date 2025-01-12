@@ -1,18 +1,18 @@
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
-import { ChannelType, MemberRole } from "@prisma/client";
-import { channel } from "diagnostics_channel";
-import { redirect } from "next/navigation";
+import { currentProfile } from '@/lib/current-profile';
+import { db } from '@/lib/db';
+import { ChannelType, MemberRole } from '@prisma/client';
+import { channel } from 'diagnostics_channel';
+import { redirect } from 'next/navigation';
 
-import { ServerHeader } from "./server-header";
-import { ServerSearch } from "./server-search";
-import { ServerSection } from "./server-section";
+import { ServerHeader } from './server-header';
+import { ServerSearch } from './server-search';
+import { ServerSection } from './server-section';
 
-import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { SelectSeparator } from "@/components/ui/select";
-import { ServerChannel } from "./server-channel";
-import { ServerMember } from "./server-member";
+import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SelectSeparator } from '@/components/ui/select';
+import { ServerChannel } from './server-channel';
+import { ServerMember } from './server-member';
 
 interface ServerSidebarProps {
   serverId: string;
@@ -26,24 +26,22 @@ const iconMap = {
 
 const roleIconMap = {
   [MemberRole.GUEST]: null,
-  [MemberRole.MODERATOR]: (
-    <ShieldCheck className="mr-2 h-4 w-4 text-indigo-500" />
-  ),
+  [MemberRole.MODERATOR]: <ShieldCheck className="mr-2 h-4 w-4 text-indigo-500" />,
   [MemberRole.ADMIN]: <ShieldAlert className="mr-2 h-4 w-4 text-rose-500" />,
 };
 
 export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   const profile = await currentProfile();
-  if (!profile) return redirect("/");
+  if (!profile) return redirect('/');
 
   const server = await db.server.findUnique({
     where: { id: serverId },
     include: {
-      channels: { orderBy: { createdAt: "asc" } },
-      members: { include: { profile: true }, orderBy: { role: "asc" } },
+      channels: { orderBy: { createdAt: 'asc' } },
+      members: { include: { profile: true }, orderBy: { role: 'asc' } },
     },
   });
-  if (!server) return redirect("/");
+  if (!server) return redirect('/');
 
   const textChannels = server?.channels.filter(
     (channel) => channel.type === ChannelType.TEXT
@@ -69,8 +67,8 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
           <ServerSearch
             data={[
               {
-                label: "Text Channels",
-                type: "channel",
+                label: 'Text Channels',
+                type: 'channel',
                 data: textChannels?.map((channel) => ({
                   id: channel.id,
                   name: channel.name,
@@ -78,8 +76,8 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 })),
               },
               {
-                label: "Voice Channels",
-                type: "channel",
+                label: 'Voice Channels',
+                type: 'channel',
                 data: audioChannels?.map((channel) => ({
                   id: channel.id,
                   name: channel.name,
@@ -87,8 +85,8 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 })),
               },
               {
-                label: "Video Channels",
-                type: "channel",
+                label: 'Video Channels',
+                type: 'channel',
                 data: videoChannels?.map((channel) => ({
                   id: channel.id,
                   name: channel.name,
@@ -96,8 +94,8 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
                 })),
               },
               {
-                label: "Members",
-                type: "member",
+                label: 'Members',
+                type: 'member',
                 data: members?.map((member) => ({
                   id: member.id,
                   name: member.profile.name,

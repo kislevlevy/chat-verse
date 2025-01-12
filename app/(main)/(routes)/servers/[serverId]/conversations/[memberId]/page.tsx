@@ -1,12 +1,12 @@
-import { ChatHeader } from "@/components/chat/chat-header";
-import { ChatInput } from "@/components/chat/chat-input";
-import { ChatMessages } from "@/components/chat/chat-messages";
-import { MediaRoom } from "@/components/media-room";
-import { handleCoversation } from "@/lib/conversation";
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
-import { redirectToSignIn } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { ChatHeader } from '@/components/chat/chat-header';
+import { ChatInput } from '@/components/chat/chat-input';
+import { ChatMessages } from '@/components/chat/chat-messages';
+import { MediaRoom } from '@/components/media-room';
+import { handleCoversation } from '@/lib/conversation';
+import { currentProfile } from '@/lib/current-profile';
+import { db } from '@/lib/db';
+import { redirectToSignIn } from '@clerk/nextjs';
+import { redirect } from 'next/navigation';
 
 interface MemberIdPageProps {
   params: {
@@ -29,17 +29,13 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
     },
     include: { profile: true },
   });
-  if (!currentMember) return redirect("/");
+  if (!currentMember) return redirect('/');
 
-  const conversation = await handleCoversation(
-    currentMember.id,
-    params.memberId
-  );
+  const conversation = await handleCoversation(currentMember.id, params.memberId);
   if (!conversation) return redirect(`/servers/${params.serverId}`);
 
   const { memberOne, memberTwo } = conversation;
-  const otherMember =
-    memberOne.profileId === profile.id ? memberTwo : memberOne;
+  const otherMember = memberOne.profileId === profile.id ? memberTwo : memberOne;
 
   return (
     <div className="bg-white dark:bg-[#313338] flex flex-col h-full">

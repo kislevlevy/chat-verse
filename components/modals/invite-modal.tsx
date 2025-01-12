@@ -1,25 +1,25 @@
-"use client";
-import { useModal } from "@/hooks/use-modal-store";
+'use client';
+import { useModal } from '@/hooks/use-modal-store';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Check, Copy, RefreshCw } from "lucide-react";
-import { useOrigin } from "@/hooks/use-origin";
-import { useState } from "react";
-import axios from "axios";
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Check, Copy, RefreshCw } from 'lucide-react';
+import { useOrigin } from '@/hooks/use-origin';
+import { useState } from 'react';
+import axios from 'axios';
 
 export const InviteModal = () => {
   const { onOpen, isOpen, onClose, type, data } = useModal();
 
   const orgin = useOrigin();
 
-  const isModalOpen = isOpen && type === "invite";
+  const isModalOpen = isOpen && type === 'invite';
   const { server } = data;
 
   const [copied, setCopied] = useState(false);
@@ -37,10 +37,8 @@ export const InviteModal = () => {
     try {
       setIsLoading(true);
 
-      const response = await axios.patch(
-        `/api/servers/${server?.id}/invite-code`
-      );
-      onOpen("invite", { server: response.data });
+      const response = await axios.patch(`/api/servers/${server?.id}/invite-code`);
+      onOpen('invite', { server: response.data });
     } catch (err) {
       console.log(err);
     } finally {
@@ -67,11 +65,7 @@ export const InviteModal = () => {
               value={inviteUrl}
             />
             <Button disabled={isLoading} onClick={onCopy} size="icon">
-              {copied ? (
-                <Check className="w-4 h-4" />
-              ) : (
-                <Copy className="w-4 h-4" />
-              )}
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
             </Button>
           </div>
           <Button

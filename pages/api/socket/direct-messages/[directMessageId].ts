@@ -1,24 +1,24 @@
-import { NextApiRequest } from "next";
-import { NextApiResponseServerIo } from "@/types";
-import { db } from "@/lib/db";
-import { currentProfilePages } from "@/lib/current-profile-pages";
-import { MemberRole } from "@prisma/client";
+import { NextApiRequest } from 'next';
+import { NextApiResponseServerIo } from '@/types';
+import { db } from '@/lib/db';
+import { currentProfilePages } from '@/lib/current-profile-pages';
+import { MemberRole } from '@prisma/client';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponseServerIo
 ) {
-  if (req.method !== "DELETE" && req.method !== "PATCH")
-    return res.status(405).json({ error: "Method not allowed" });
+  if (req.method !== 'DELETE' && req.method !== 'PATCH')
+    return res.status(405).json({ error: 'Method not allowed' });
 
   try {
     const profile = await currentProfilePages(req);
     const { directMessageId, conversationId } = req.query;
     const { content } = req.body;
 
-    if (!profile) return res.status(401).json({ error: "Unauthorized" });
+    if (!profile) return res.status(401).json({ error: 'Unauthorized' });
     if (!conversationId)
-      return res.status(400).json({ error: "Conversation ID missing" });
+      return res.status(400).json({ error: 'Conversation ID missing' });
 
     const conversation = await db.conversation.findFirst({
       where: {
@@ -38,13 +38,13 @@ export default async function handler(
       },
     });
     if (!conversation)
-      return res.status(404).json({ error: "Conversation not found" });
+      return res.status(404).json({ error: 'Conversation not found' });
 
     const member =
       conversation.memberOne.profileId === profile.id
         ? conversation.memberOne
         : conversation.memberTwo;
-    if (!member) return res.status(404).json({ error: "Member not found" });
+    if (!member) return res.status(404).json({ error: 'Member not found' });
 
     let directMessage = await db.directMessage.findFirst({
       where: {
@@ -58,20 +58,20 @@ export default async function handler(
       },
     });
     if (!directMessage || directMessage.deleted)
-      return res.status(404).json({ error: "Message not found" });
+      return res.status(404).json({ error: 'Message not found' });
 
     const isMessageOwner = directMessage.memberId === member.id;
     const isAdmin = member.role === MemberRole.ADMIN;
     const isModerator = member.role === MemberRole.MODERATOR;
     const canModify = isMessageOwner || isAdmin || isModerator;
 
-    if (!canModify) return res.status(401).json({ error: "Unauthorized" });
-    if (req.method === "DELETE") {
+    if (!canModify) return res.status(401).json({ error: 'Unauthorized' });
+    if (req.method === 'DELETE') {
       directMessage = await db.directMessage.update({
         where: { id: directMessageId as string },
         data: {
           fileUrl: null,
-          content: "This message has been deleted.",
+          content: 'This message has been deleted.',
           deleted: true,
         },
         include: {
@@ -81,9 +81,8 @@ export default async function handler(
         },
       });
     }
-    if (req.method === "PATCH") {
-      if (!isMessageOwner)
-        return res.status(401).json({ error: "Unauthorized" });
+    if (req.method === 'PATCH') {
+      if (!isMessageOwner) return res.status(401).json({ error: 'Unauthorized' });
 
       directMessage = await db.directMessage.update({
         where: { id: directMessageId as string },
@@ -103,7 +102,7 @@ export default async function handler(
     return res.status(200).json(directMessage);
     //
   } catch (err) {
-    console.log("[DIRECT_MESSAGE_ID]", err);
-    return res.status(500).json({ error: "Internal error" });
+    console.log('[DIRECT_MESSAGE_ID]', err);
+    return res.status(500).json({ error: 'Internal error' });
   }
 }

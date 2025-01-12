@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from './db';
 
 export const handleCoversation = async (
   memberOneId: string,
@@ -38,10 +38,7 @@ const findConversation = async (memberOneId: string, memberTwoId: string) => {
   }
 };
 
-const createNewCoversation = async (
-  memberOneId: string,
-  memberTwoId: string
-) => {
+const createNewCoversation = async (memberOneId: string, memberTwoId: string) => {
   try {
     return await db.conversation.create({
       data: { memberOneId, memberTwoId },

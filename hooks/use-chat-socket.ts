@@ -1,7 +1,7 @@
-import { useEffect } from "react";
-import { useSocket } from "@/components/providers/socket-provider";
-import { Member, Message, Profile } from "@prisma/client";
-import { useQueryClient } from "@tanstack/react-query";
+import { useEffect } from 'react';
+import { useSocket } from '@/components/providers/socket-provider';
+import { Member, Message, Profile } from '@prisma/client';
+import { useQueryClient } from '@tanstack/react-query';
 
 type ChatSocketProps = {
   addKey: string;
@@ -13,11 +13,7 @@ type MessageWithMemeberNProfile = Message & {
   member: Member & { profile: Profile };
 };
 
-export const useChatSocket = ({
-  addKey,
-  updateKey,
-  queryKey,
-}: ChatSocketProps) => {
+export const useChatSocket = ({ addKey, updateKey, queryKey }: ChatSocketProps) => {
   const { socket } = useSocket();
   const queryClient = useQueryClient();
 

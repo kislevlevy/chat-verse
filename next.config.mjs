@@ -1,9 +1,9 @@
-import { config } from "process";
+import { config } from 'process';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["utfs.io", "uploadthing.com"],
+    domains: ['utfs.io', 'uploadthing.com'],
   },
 };
 

@@ -1,9 +1,7 @@
-import { ThemeProvider } from "@/components/providers/theme-provider";
+import { ThemeProvider } from '@/components/providers/theme-provider';
 
 const AuthLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="h-full flex items-center justify-center">{children}</div>
-  );
+  return <div className="h-full flex items-center justify-center">{children}</div>;
 };
 
 export default AuthLayout;

@@ -1,5 +1,5 @@
-import { NavigationSidebar } from "@/components/navigation/navigation-sidebar";
-import { Navigation } from "lucide-react";
+import { NavigationSidebar } from '@/components/navigation/navigation-sidebar';
+import { Navigation } from 'lucide-react';
 
 const MainLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

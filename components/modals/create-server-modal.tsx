@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useModal } from "@/hooks/use-modal-store";
-import { FileUpload } from "@/components/file-upload";
+import * as z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useModal } from '@/hooks/use-modal-store';
+import { FileUpload } from '@/components/file-upload';
 
 import {
   Dialog,
@@ -17,7 +17,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -25,14 +25,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 
 const formSchema = z.object({
   name: z.string().min(1, {
-    message: "Server name is required.",
+    message: 'Server name is required.',
   }),
   imageUrl: z.string().min(1, {
-    message: "Server image is required.",
+    message: 'Server image is required.',
   }),
 });
 
@@ -40,13 +40,13 @@ export const CreateServerModal = () => {
   const { isOpen, onClose, type } = useModal();
   const router = useRouter();
 
-  const isModalOpen = isOpen && type === "createServer";
+  const isModalOpen = isOpen && type === 'createServer';
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      imageUrl: "",
+      name: '',
+      imageUrl: '',
     },
   });
 
@@ -55,7 +55,7 @@ export const CreateServerModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       console.log(values);
-      await axios.post("/api/servers", values);
+      await axios.post('/api/servers', values);
       form.reset();
       onClose();
       router.refresh();

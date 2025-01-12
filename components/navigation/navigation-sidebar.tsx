@@ -1,16 +1,16 @@
-import { currentProfile } from "@/lib/current-profile";
-import { db } from "@/lib/db";
-import { redirect } from "next/navigation";
-import { NavigationAction } from "./navigation-action";
-import { Separator } from "@/components/ui/separator";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { NavigationItem } from "./navigation-item";
-import { ModeToggle } from "@/components/mode-toggle";
-import { UserButton } from "@clerk/nextjs";
+import { currentProfile } from '@/lib/current-profile';
+import { db } from '@/lib/db';
+import { redirect } from 'next/navigation';
+import { NavigationAction } from './navigation-action';
+import { Separator } from '@/components/ui/separator';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { NavigationItem } from './navigation-item';
+import { ModeToggle } from '@/components/mode-toggle';
+import { UserButton } from '@clerk/nextjs';
 
 export const NavigationSidebar = async () => {
   const profile = await currentProfile();
-  if (!profile) return redirect("/");
+  if (!profile) return redirect('/');
 
   const servers = await db.server.findMany({
     where: { members: { some: { profileId: profile.id } } },
@@ -40,7 +40,7 @@ export const NavigationSidebar = async () => {
         <UserButton
           afterSignOutUrl="/"
           appearance={{
-            elements: { avatarBox: "h-[48px] w-[48px]" },
+            elements: { avatarBox: 'h-[48px] w-[48px]' },
           }}
         />
       </div>
